@@ -1,28 +1,6 @@
-/** ver:1
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-
-function GoodsInfo(props){
-    return(
-      <Container>
-        <Row>
-          <Col sm>
-            <img src={props.shoes[props.i].img} width='500px'/>
-            <h4>상품명 : {props.shoes[props.i].title}</h4>
-            <p>상품설명 : {props.shoes[props.i].content}</p>
-            <p>가격 : {props.shoes[props.i].price}</p>
-            <button className='btn btn-danger'>주문하기</button>
-          </Col>
-        </Row>
-    </Container>
-    )
-}
-
-export default GoodsInfo;*/
-
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams , Link } from 'react-router-dom';
 
 function GoodsInfo(props){
     //이게 url 입력한곳에서 내주소/detail/x << x부분을 가져오는 함순데 이게
@@ -56,6 +34,8 @@ function GoodsInfo(props){
             <p>상품설명 : {props.shoes[findData.id].content}</p>
             <p>가격 : {props.shoes[findData.id].price}</p>
             <button className='btn btn-danger'>주문하기</button>
+            <br/>
+            <Link to="/">집으로 돌아가버렷</Link>
         </Col>
         </Row>
     </Container>
@@ -63,3 +43,25 @@ function GoodsInfo(props){
 }
 
 export default GoodsInfo;
+
+/** ver:1
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+
+function GoodsInfo(props){
+    return(
+      <Container>
+        <Row>
+          <Col sm>
+            <img src={props.shoes[props.i].img} width='500px'/>
+            <h4>상품명 : {props.shoes[props.i].title}</h4>
+            <p>상품설명 : {props.shoes[props.i].content}</p>
+            <p>가격 : {props.shoes[props.i].price}</p>
+            <button className='btn btn-danger'>주문하기</button>
+          </Col>
+        </Row>
+    </Container>
+    )
+}
+
+export default GoodsInfo;*/

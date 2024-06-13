@@ -33,18 +33,17 @@ let Boxs = styled.div`
   padding : 10px;
 `
 //기존 스타일 복사 가능 똑같이 수정도 가능
-let NewBtn = styled.button(YellowBtn)`
-  
-`
+// let NewBtn = styled.button(YellowBtn)`
+// `
 
 function App() {
   let [shoes] = useState(data);
   let navigate = useNavigate();
   return (
     <div className="App">
-      <Boxs>
+      {/* <Boxs>
         <YellowBtn bg="blue">ㅋㅋ</YellowBtn>
-      </Boxs>
+      </Boxs> */}
       {/** 헤더 시작 */}
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
@@ -59,48 +58,11 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={
-          /** ver 1
-          <div>
-            <div className='main-bg' style={{ backgroundImage: 'url(' + bg + ')' }} />
-              <Container>
-                <Row>
-                  {
-                    shoes.map(function (a, i) {
-                      return (
-                        <Goods shoes={shoes} i={i} navigate={navigate}/>
-                      )
-                    })
-                  }
-                </Row>
-              </Container>
-          </div>
-          */
-          <Home shoes={shoes} navigate={navigate}></Home>
-        }>
-        </Route>
-
-        {
-        /** ver 1
-        {
-          shoes.map(function (a, i) {
-            return (
-              <Route path={"/detail/"+i} element={
-                <div>
-                  <GoodsInfo i={i} shoes={shoes}/>
-                  <Link to="/">홈으로 돌아가기</Link>
-                </div>
-              }>
-              </Route>
-            )
-          })
-        }
-         */
-        }
-
+        <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
         <Route path="/detail/:id" element={<GoodsInfo shoes={shoes}/>}></Route>
         <Route path="*" element={<div>404임</div>}></Route>
 
+        {/* Route nested */}
         <Route path="/event" element={<Event/>}>
           <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
           <Route path='two' element={<p>생일기념 쿠폰받기</p>}></Route>
@@ -110,4 +72,40 @@ function App() {
   );
 }
 
+
+/** ver 1
+  <div>
+    <div className='main-bg' style={{ backgroundImage: 'url(' + bg + ')' }} />
+      <Container>
+        <Row>
+          {
+            shoes.map(function (a, i) {
+              return (
+                <Goods shoes={shoes} i={i} navigate={navigate}/>
+              )
+            })
+          }
+        </Row>
+      </Container>
+  </div>
+*/
+
+
+{
+/** ver 1
+  {
+    shoes.map(function (a, i) {
+      return (
+        <Route path={"/detail/"+i} element={
+          <div>
+            <GoodsInfo i={i} shoes={shoes}/>
+            <Link to="/">홈으로 돌아가기</Link>
+          </div>
+        }>
+        </Route>
+      )
+    })
+  }
+*/
+}
 export default App;
