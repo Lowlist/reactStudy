@@ -11,9 +11,10 @@ import { useParams , Link } from 'react-router-dom';
 
 function GoodsInfo(props){
     let [times,setTimes] = useState(5);
-    let [alert,setAlert] = useState(true);
+    let [alerts,setAlert] = useState(true);
+    let [number,setNumber] = useState('');
     let {id} = useParams();
-
+    let [showWarning,setShowWarning] = useState(false);
     useEffect(()=>{
         let timer = setInterval(()=>{ 
             setTimes(times = times - 1);
@@ -29,6 +30,15 @@ function GoodsInfo(props){
             clearTimeout(out);
         }
     },[]);
+
+    useEffect(()=>{
+        if(isNaN(number) == true){
+            alert('응애');
+            setShowWarning(true);
+        }else{
+            setShowWarning(false);
+        }
+    },[number])
 
     // [] << 이렇게 아무것도 안넣을시 1번만 실행하고 영영 실행 안해줌
     // 만약 파라미터 값을 삽입하면 그 값이 변할 시 useEffect 를 바뀔때마다 실행해줌. ajax 통신할때 사용하면 좋을듯?
@@ -46,8 +56,6 @@ function GoodsInfo(props){
      *   }
      * },[])
      */
-
-
 
     let findData = props.shoes.find(
         function(x){
@@ -67,7 +75,7 @@ function GoodsInfo(props){
     return(
     <Container>
         {
-        alert == true ? 
+        alerts == true ? 
             <div className='alert alert-warning'>
                 {times}초이내 구매시 할인
             </div>
@@ -75,13 +83,18 @@ function GoodsInfo(props){
         }
         <Row>
         <Col sm>
-            <img src={props.shoes[findData.id].img} width='500px'/>
+            <img src={"https://codingapple1.github.io/shop/shoes"+(findData.id+1)+".jpg"} width='500px'/>
             <h4>상품명 : {props.shoes[findData.id].title}</h4>
             <p>상품설명 : {props.shoes[findData.id].content}</p>
             <p>가격 : {props.shoes[findData.id].price}</p>
             <button className='btn btn-danger'>주문하기</button>
             <br/>
             <Link to="/">집으로 돌아가버렷</Link>
+            <br/>
+            <input className={'number-test'} value={number} onChange={(e)=>{ setNumber(e.target.value) } }></input>
+            {
+            showWarning && <h4 className="text-danger" aria-disabled>!!!!!!초 응애!!!!!!</h4>
+            }  
         </Col>
         </Row>
     </Container>

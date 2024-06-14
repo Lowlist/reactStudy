@@ -4,6 +4,7 @@ import { Container, Row } from 'react-bootstrap';
 import Goods from './goods.js';
 import bg from '../img/bg.png';
 
+// 만약 props 안에 props 추가하려면 잘 줘야함.
 
 function Home (props){
     return(
@@ -14,7 +15,7 @@ function Home (props){
                   {
                     props.shoes.map(function (a, i) {
                       return (
-                        <Goods shoes={props.shoes} i={i} navigate={props.navigate}/>
+                        <Goods key={i} shoes={props.shoes} i={i} navigate={props.navigate}/>
                       )
                     })
                   }

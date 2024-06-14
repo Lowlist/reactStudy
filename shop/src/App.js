@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 import './App.css';
 import data from './data.js';
+import data2 from './coustomAxios/data2.js'
+import data3 from './coustomAxios/data3.js'
+import data4 from './coustomAxios/data4.js'
 import GoodsInfo from './routes/detail.js';
 import Event from './routes/event.js';
 import Home from './routes/home.js';
@@ -37,13 +40,13 @@ let Boxs = styled.div`
 // `
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes,setShoes] = useState(data);
+  let [isLoading, setIsLoading] = useState(false);
+  let [renewal,setRenewal] = useState(true);
+  let [num,setNum] = useState(2);
   let navigate = useNavigate();
   return (
     <div className="App">
-      {/* <Boxs>
-        <YellowBtn bg="blue">ㅋㅋ</YellowBtn>
-      </Boxs> */}
       {/** 헤더 시작 */}
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
@@ -61,17 +64,33 @@ function App() {
         <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
         <Route path="/detail/:id" element={<GoodsInfo shoes={shoes}/>}></Route>
         <Route path="*" element={<div>404임</div>}></Route>
-
+        
         {/* Route nested */}
         <Route path="/event" element={<Event/>}>
           <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
           <Route path='two' element={<p>생일기념 쿠폰받기</p>}></Route>
         </Route>
       </Routes>
+
+      {
+        renewal &&
+        <Boxs>
+          {/* spread 연산자 (...문법) 중요!!! */}
+          <YellowBtn bg="blue" onClick={() => { 
+            setIsLoading(true);
+            data4( {shoes,setShoes} , {num,setNum} , {renewal,setRenewal} , {isLoading,setIsLoading} ) 
+          }}>갱신</YellowBtn>
+        </Boxs>
+      }
+
+      {
+        isLoading === true ? <h4>응애</h4> : null
+      }
+
+
     </div>
   );
 }
-
 
 /** ver 1
   <div>
@@ -93,7 +112,7 @@ function App() {
 
 {
 /** ver 1
-  {
+  {KF
     shoes.map(function (a, i) {
       return (
         <Route path={"/detail/"+i} element={
