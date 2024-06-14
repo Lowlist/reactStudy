@@ -73,19 +73,18 @@ function App() {
       </Routes>
 
       {
-        renewal &&
+        renewal == true ?
         <Boxs>
           {/* spread 연산자 (...문법) 중요!!! */}
           <YellowBtn bg="blue" onClick={() => { 
-            setIsLoading(true);
             data4( {shoes,setShoes} , {num,setNum} , {renewal,setRenewal} , {isLoading,setIsLoading} ) 
           }}>갱신</YellowBtn>
         </Boxs>
+        : 
+        <h4>데이터가 없습니다!</h4>
       }
 
-      {
-        isLoading === true ? <h4>응애</h4> : null
-      }
+      {isLoading && <h4>Loading...</h4>}
 
 
     </div>
