@@ -8,6 +8,7 @@ import data4 from './coustomAxios/data4.js'
 import GoodsInfo from './routes/detail.js';
 import Event from './routes/event.js';
 import Home from './routes/home.js';
+import Cart from './routes/Cart.js';
 import { Routes , Route , Link , useNavigate} from 'react-router-dom';
 
 // 스타일 컴포넌트 장점
@@ -79,6 +80,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
           <Route path="/detail/:id" element={ <GoodsInfo shoes={shoes}/> }></Route>
+          <Route path="/cart" element={<Cart/>}></Route>          
           <Route path="*" element={<div>404임</div>}></Route>
           
           {/* Route nested */}
