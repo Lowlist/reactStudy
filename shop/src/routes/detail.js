@@ -1,6 +1,10 @@
-import { React, useEffect ,useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { useParams , Link } from 'react-router-dom';
+import { React, useContext, useEffect ,useState } from 'react';
+import { Container, Row, Col , Nav} from 'react-bootstrap';
+import { useParams , Link, Outlet } from 'react-router-dom';
+
+// ContextAPI 세팅3 임포트 시켜서 변수할당 해야됨
+import { Context1 } from '../App.js';
+
 
 //이게 url 입력한곳에서 내주소/detail/x << x부분을 가져오는 함순데 이게
 // 아까 오브젝트 형식으로 가져온다 했잖아 그게 이유가
@@ -10,12 +14,23 @@ import { useParams , Link } from 'react-router-dom';
 // 배열찾는곳에 또 오브젝트를 그냥 넣어버림ㅋㅋ 그래서 버그났던거임
 
 function GoodsInfo(props){
+
+    // ContextAPI 세팅4 디스츠럭쳐링 쓰던가 아니면 변수에 데이터 넣던가 해서 가져오면됨
+    let {contextTest} = useContext(Context1);
+
     let [times,setTimes] = useState(5);
     let [alerts,setAlert] = useState(true);
     let [number,setNumber] = useState('');
+    let [fade2,setFade2] = useState('');
     let {id} = useParams();
     let [showWarning,setShowWarning] = useState(false);
+    let [showOption,setShowOption] = useState(false);
+    let [tap,setTap] = useState(0);
+
     useEffect(()=>{
+
+        setFade2('end')
+
         let timer = setInterval(()=>{ 
             setTimes(times = times - 1);
         }, 1000);
@@ -28,6 +43,7 @@ function GoodsInfo(props){
         return ()=>{
             clearInterval(timer);
             clearTimeout(out);
+            setFade2('')
         }
     },[]);
 
@@ -73,7 +89,7 @@ function GoodsInfo(props){
     }
 
     return(
-    <Container>
+    <Container className={'start ' + fade2}>
         {
         alerts == true ? 
             <div className='alert alert-warning'>
@@ -87,18 +103,64 @@ function GoodsInfo(props){
             <h4>상품명 : {props.shoes[findData.id].title}</h4>
             <p>상품설명 : {props.shoes[findData.id].content}</p>
             <p>가격 : {props.shoes[findData.id].price}</p>
-            <button className='btn btn-danger'>주문하기</button>
+            <button className='btn btn-danger'>주문하기</button> 
+            <button className='btn btn-danger' onClick={()=>{setShowOption(true)}}>옵션설정</button>
             <br/>
             <Link to="/">집으로 돌아가버렷</Link>
             <br/>
             <input className={'number-test'} value={number} onChange={(e)=>{ setNumber(e.target.value) } }></input>
-            {
-            showWarning && <h4 className="text-danger" aria-disabled>!!!!!!초 응애!!!!!!</h4>
-            }  
+            {showWarning && <h4 className="text-danger" aria-disabled>!!!!!!초 응애!!!!!!</h4>}  
+            {showOption == true ? 
+                <div>
+                    <Nav variant="tabs" defaultActiveKey="link0">
+                        <Nav.Item>
+                            <Nav.Link eventKey="link0" onClick={()=>{setTap(0)}}>색상선택</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="link1" onClick={()=>{setTap(1)}}>사이즈선택</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="link2" onClick={()=>{setTap(2)}}>옵션2</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                    <TabContent tap={tap} shoes={props.shoes}/>
+                </div>
+                :null
+            }
         </Col>
         </Row>
     </Container>
     )
+}
+// {tap} << 이런식으로 props 말고 전송 가능함.
+function TabContent(props){
+
+    //여기서도 변수설정 해줘야됨. ContextAPI
+    let {contextTest} = useContext(Context1);
+
+    let [fade,setFade] = useState('')
+
+    useEffect(()=>{
+
+        setTimeout(()=>{ setFade('end') },[10])
+        
+        return ()=>{
+            setFade('')
+        }
+    },[props])
+
+    if(props.tap == 0){
+       return <div className={'start ' + fade}> {props.shoes[0].title} </div>
+    }
+    if(props.tap == 1){
+       return <div>{contextTest}</div>
+    }
+    if(props.tap == 2){
+       return <div>내용2</div>
+    }
+    // 이거도 작동함 어레이에서 어레이 자료 빼오는 문법 근데 if가 편하니까 if할꺼임
+    // return[<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][props.tap]
+
 }
 
 export default GoodsInfo;

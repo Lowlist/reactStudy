@@ -1,4 +1,4 @@
-import { useState , useEffect } from 'react';
+import { useState , useEffect, createContext } from 'react';
 import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 import './App.css';
 import data from './data.js';
@@ -39,8 +39,22 @@ let Boxs = styled.div`
 // let NewBtn = styled.button(YellowBtn)`
 // `
 
+
+// ContextAPI 세팅 1 State 보관함임 
+// ContextAPI 특징 
+// 1.state 변경시 쓸데없는 것까지 재 렌더링 시켜서 성능이슈가 있음.
+// 2.나중에 컴포넌트 재사용이 어려움
+// 결론 = redux쓰는게 더 좋다
+
+export let Context1 = createContext()
+
+
 function App() {
   let [shoes,setShoes] = useState(data);
+
+
+  let [contextTest] = useState([10,11,12])
+
   let [isLoading, setIsLoading] = useState(false);
   let [renewal,setRenewal] = useState(true);
   let [num,setNum] = useState(2);
@@ -60,17 +74,20 @@ function App() {
         </Container>
       </Navbar>
 
-      <Routes>
-        <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
-        <Route path="/detail/:id" element={<GoodsInfo shoes={shoes}/>}></Route>
-        <Route path="*" element={<div>404임</div>}></Route>
-        
-        {/* Route nested */}
-        <Route path="/event" element={<Event/>}>
-          <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
-          <Route path='two' element={<p>생일기념 쿠폰받기</p>}></Route>
-        </Route>
-      </Routes>
+        {/* ContextAPI 용 세팅 2 프리바이더 라우터 안에다가 넣으려면 한개만 해야하는게 아니라 전체적으로 감싸줘야됨. */}
+      <Context1.Provider value={ {contextTest} }>
+        <Routes>
+          <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
+          <Route path="/detail/:id" element={ <GoodsInfo shoes={shoes}/> }></Route>
+          <Route path="*" element={<div>404임</div>}></Route>
+          
+          {/* Route nested */}
+          <Route path="/event" element={<Event/>}>
+            <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
+            <Route path='two' element={<p>생일기념 쿠폰받기</p>}></Route>
+          </Route>
+        </Routes>
+      </Context1.Provider>
 
       {
         renewal == true ?
@@ -80,8 +97,7 @@ function App() {
             data4( {shoes,setShoes} , {num,setNum} , {renewal,setRenewal} , {isLoading,setIsLoading} ) 
           }}>갱신</YellowBtn>
         </Boxs>
-        : 
-        <h4>데이터가 없습니다!</h4>
+        : null
       }
 
       {isLoading && <h4>Loading...</h4>}
