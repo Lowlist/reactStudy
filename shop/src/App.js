@@ -24,9 +24,8 @@ import { Routes , Route , Link , useNavigate} from 'react-router-dom';
 // 3.협업시 CSS담당의 숙련도 이슈
 
 // 결론 = 기본 CSS 스타일 컴포넌트 둘중 아무거나 사용해도 상관 없습니다.
-
+// 프롭스로 전부 적용가능.
 import styled from 'styled-components';
-// 프롭스도 작동함
 let YellowBtn = styled.button`
   background : ${props => props.bg};
   color : ${props => props.bg == 'blue' ? 'white' : 'black' } ;
@@ -41,12 +40,13 @@ let Boxs = styled.div`
 // `
 
 
-// ContextAPI 세팅 1 State 보관함임 
+
 // ContextAPI 특징 
 // 1.state 변경시 쓸데없는 것까지 재 렌더링 시켜서 성능이슈가 있음.
 // 2.나중에 컴포넌트 재사용이 어려움
 // 결론 = redux쓰는게 더 좋다
 
+// ContextAPI 세팅 1 State 보관함임 
 export let Context1 = createContext()
 
 
