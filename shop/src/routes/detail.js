@@ -49,7 +49,7 @@ function GoodsInfo(props){
 
     useEffect(()=>{
         if(isNaN(number) == true){
-            alert('응애');
+            alert('문자 입력 하지 마셈!');
             setShowWarning(true);
         }else{
             setShowWarning(false);
@@ -109,7 +109,7 @@ function GoodsInfo(props){
             <Link to="/">집으로 돌아가버렷</Link>
             <br/>
             <input className={'number-test'} value={number} onChange={(e)=>{ setNumber(e.target.value) } }></input>
-            {showWarning && <h4 className="text-danger" aria-disabled>!!!!!!초 응애!!!!!!</h4>}  
+            {showWarning && <h4 className="text-danger" aria-disabled>숫자만 입력해주세요!</h4>}  
             {showOption == true ? 
                 <div>
                     <Nav variant="tabs" defaultActiveKey="link0">
