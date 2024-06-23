@@ -52,10 +52,7 @@ export let Context1 = createContext()
 
 function App() {
   let [shoes,setShoes] = useState(data);
-
-
   let [contextTest] = useState([10,11,12])
-
   let [isLoading, setIsLoading] = useState(false);
   let [renewal,setRenewal] = useState(true);
   let [num,setNum] = useState(2);
@@ -69,7 +66,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="detail">Features</Nav.Link>
-            <Nav.Link href="/">Pricing</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
             <Nav.Link href="event">Event</Nav.Link>
           </Nav>
         </Container>
@@ -80,7 +77,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
           <Route path="/detail/:id" element={ <GoodsInfo shoes={shoes}/> }></Route>
-          <Route path="/cart" element={<Cart/>}></Route>          
+
+          <Route path="/cart" element={<Cart/>}></Route>
           <Route path="*" element={<div>404임</div>}></Route>
           
           {/* Route nested */}
