@@ -4,7 +4,8 @@ let data = [
       title : "White and Black",
       content : "Born in France",
       img : "/img/shoes1.jpg",
-      price : 120000
+      price : 120000,
+      count : 0
     },
   
     {
@@ -12,7 +13,8 @@ let data = [
       title : "Red Knit",
       content : "Born in Seoul",
       img : "/img/shoes2.jpg",
-      price : 110000
+      price : 110000,
+      count : 0
     },
   
     {
@@ -20,7 +22,8 @@ let data = [
       title : "Grey Yordan",
       content : "Born in the States",
       img : "/img/shoes3.jpg",
-      price : 130000
+      price : 130000,
+      count : 0
     }
   ] 
 

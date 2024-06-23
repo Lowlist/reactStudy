@@ -1,7 +1,8 @@
 import { React, useContext, useEffect ,useState } from 'react';
 import { Container, Row, Col , Nav} from 'react-bootstrap';
 import { useParams , Link, Outlet } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from './../store/cartSlice.js'
 // ContextAPI 세팅3 임포트 시켜서 변수할당 해야됨
 import { Context1 } from '../App.js';
 
@@ -14,7 +15,7 @@ import { Context1 } from '../App.js';
 // 배열찾는곳에 또 오브젝트를 그냥 넣어버림ㅋㅋ 그래서 버그났던거임
 
 function GoodsInfo(props){
-
+    let disPatch = useDispatch();
     // ContextAPI 세팅4 디스츠럭쳐링 쓰던가 아니면 변수에 데이터 넣던가 해서 가져오면됨
     let {contextTest} = useContext(Context1);
 
@@ -103,10 +104,13 @@ function GoodsInfo(props){
             <h4>상품명 : {props.shoes[findData.id].title}</h4>
             <p>상품설명 : {props.shoes[findData.id].content}</p>
             <p>가격 : {props.shoes[findData.id].price}</p>
-            <button className='btn btn-danger'>주문하기</button> 
+            <button className='btn btn-danger' onClick={()=>{disPatch(addCart(props.shoes[findData.id].title))}}>주문하기</button>
+            {console.log(props.shoes[findData.id])}
             <button className='btn btn-danger' onClick={()=>{setShowOption(true)}}>옵션설정</button>
             <br/>
             <Link to="/">집으로 돌아가버렷</Link>
+            <br></br>
+            <Link to="/cart">카트로 가버렷</Link>
             <br/>
             <input className={'number-test'} value={number} onChange={(e)=>{ setNumber(e.target.value) } }></input>
             {showWarning && <h4 className="text-danger" aria-disabled>숫자만 입력해주세요!</h4>}  

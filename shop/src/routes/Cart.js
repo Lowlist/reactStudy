@@ -1,6 +1,7 @@
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeName } from '../store';
+import { changeName , changeAge } from './../store/userSlice.js'
+import { changeCount } from './../store/cartSlice.js'
 
 function Cart() {
     
@@ -15,7 +16,9 @@ function Cart() {
     return (
         <div>
 
-            {state.user}의 장바구니
+            {state.user.name}의 장바구니 나이: {state.user.age}
+            {/* 화살표함수 없으면 렉 오지고 작동안됨 */}
+            <button onClick={()=>{disPatch(changeAge(3))}}>나이증가</button>
 
             <Table>
                 <thead>
@@ -31,13 +34,12 @@ function Cart() {
                         state.cart.map(function (a, i) {
                             return (
                                     <tr key={i}> 
-                                        <td>{i+1}</td>
+                                        <td>{state.cart[i].id}</td>
                                         <td>{state.cart[i].name}</td>
                                         <td>{state.cart[i].count}</td>
-                                        <td>응애</td>
                                         <td>
                                             <button onClick={()=>{
-                                                disPatch(changeName())
+                                                disPatch(changeCount(state.cart[i].id))
                                             }}>
                                                 +
                                             </button>

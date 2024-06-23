@@ -1,4 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
+import user from './store/userSlice.js'
+import cart from './store/cartSlice.js'
 /**
  * -리덕스 쓰는이유 
  * -컴포넌트간 state 공유 편해짐
@@ -16,29 +18,15 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
  */
 
 // 유즈 스테이트 역할임
-let user = createSlice({
-  name : 'user',
-  initialState : 'kim',
-  reducers : {
-    changeName(state){
-      return 'john' + state
-    }
-  }
-})
-
-// 디스트럭쳐링 문법
-export let { changeName } = user.actions
-
-let cart = createSlice({
-  name : 'cart',
-  initialState : [
-    {id : 0, name : 'White and Black', count : 2},
-    {id : 2, name : 'Grey Yordan', count : 1}
-  ]
-})
-
-
-
+// let user = createSlice({
+//   name : 'user',
+//   initialState : 'kim',
+//   reducers : {
+//     changeName(state){
+//       return 'john' + state
+//     }
+//   }
+// })
 
 //여기에서도 써줘야됨
 export default configureStore({
