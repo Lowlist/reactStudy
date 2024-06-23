@@ -12,8 +12,7 @@ let user = createSlice({
         changeAge(state, action) {
             // payload 필수임 파라미터 가져올꺼면
             state.age += action.payload;
-        }
-
+        },
     }
 })
 

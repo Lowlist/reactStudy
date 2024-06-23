@@ -104,8 +104,7 @@ function GoodsInfo(props){
             <h4>상품명 : {props.shoes[findData.id].title}</h4>
             <p>상품설명 : {props.shoes[findData.id].content}</p>
             <p>가격 : {props.shoes[findData.id].price}</p>
-            <button className='btn btn-danger' onClick={()=>{disPatch(addCart(props.shoes[findData.id].title))}}>주문하기</button>
-            {console.log(props.shoes[findData.id])}
+            <button className='btn btn-danger' onClick={()=>{disPatch(addCart(props.shoes[findData.id]))}}>주문하기</button>
             <button className='btn btn-danger' onClick={()=>{setShowOption(true)}}>옵션설정</button>
             <br/>
             <Link to="/">집으로 돌아가버렷</Link>
