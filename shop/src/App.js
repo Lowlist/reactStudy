@@ -49,7 +49,6 @@ let Boxs = styled.div`
 // ContextAPI 세팅 1 State 보관함임 
 export let Context1 = createContext()
 
-
 function App() {
   let [shoes,setShoes] = useState(data);
   let [contextTest] = useState([10,11,12])
