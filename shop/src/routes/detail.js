@@ -1,8 +1,8 @@
 import { React, useContext, useEffect ,useState } from 'react';
 import { Container, Row, Col , Nav} from 'react-bootstrap';
 import { useParams , Link, Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from './../store/cartSlice.js'
+import { useDispatch, useSelector } from 'react-redux';
 // ContextAPI 세팅3 임포트 시켜서 변수할당 해야됨
 import { Context1 } from '../App.js';
 
@@ -15,10 +15,8 @@ import { Context1 } from '../App.js';
 // 배열찾는곳에 또 오브젝트를 그냥 넣어버림ㅋㅋ 그래서 버그났던거임
 
 function GoodsInfo(props){
-    let disPatch = useDispatch();
     // ContextAPI 세팅4 디스츠럭쳐링 쓰던가 아니면 변수에 데이터 넣던가 해서 가져오면됨
     let {contextTest} = useContext(Context1);
-
     let [times,setTimes] = useState(5);
     let [alerts,setAlert] = useState(true);
     let [number,setNumber] = useState('');
@@ -27,11 +25,28 @@ function GoodsInfo(props){
     let [showWarning,setShowWarning] = useState(false);
     let [showOption,setShowOption] = useState(false);
     let [tap,setTap] = useState(0);
+    let disPatch = useDispatch();
 
     useEffect(()=>{
+        /**
+         *  변수에 로컬스토리지를 넣음 -> 배열길이가 있을경우에만 if코드 실행 아니면 생성
+         *  일단 데이터를 제이슨형식에서 파싱 후 배열에 추가 Set 내장객체 이용해서 중복데이터 제거
+         *  Array.from 사용해서 배열로 바꾼 후 로컬스토리지에 set
+         */
+        let localData = localStorage.getItem('watched') || [];
+        if(localData.length > 0){
+            localData = JSON.parse(localData);
+            localData.push(findData.id);
+            let set = new Set(localData);
+            set = Array.from(set)
+            localStorage.setItem('watched', JSON.stringify(set));
+        }else{
+            localStorage.setItem('watched', JSON.stringify([]));
+        }
+    },[]);
 
+    useEffect(()=>{
         setFade2('end')
-
         let timer = setInterval(()=>{ 
             setTimes(times = times - 1);
         }, 1000);
@@ -88,6 +103,7 @@ function GoodsInfo(props){
             </div>
         )
     }
+
 
     return(
     <Container className={'start ' + fade2}>

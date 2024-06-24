@@ -48,15 +48,15 @@ let cart = createSlice({
         cartSort(state,action){
             if(action.payload.nameOn){
                 //a->z 순 정렬
-                state.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+                return state.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
             }
             if(action.payload.idOn){
                 //id 0부터 정렬
-                state.sort((a, b) => a.id - b.id)
+                return state.sort((a, b) => a.id - b.id)
             }
             if(action.payload.amountOn){
                 //개수 높은순으로 위로 올라감
-                state.sort((a, b) => b.count - a.count)
+                return state.sort((a, b) => b.count - a.count)
             }
         }
     }

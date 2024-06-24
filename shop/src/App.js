@@ -50,12 +50,20 @@ let Boxs = styled.div`
 export let Context1 = createContext()
 
 function App() {
+  // let obj = {name : 'kim'}
+  // localStorage.setItem('data',JSON.stringify(obj));
+  // let b = localStorage.getItem('data')
+  // console.log(JSON.parse(b))
   let [shoes,setShoes] = useState(data);
   let [contextTest] = useState([10,11,12])
   let [isLoading, setIsLoading] = useState(false);
   let [renewal,setRenewal] = useState(true);
   let [num,setNum] = useState(2);
+  let bb = localStorage.getItem('watched')
+  let [watch,setWatch]=useState(JSON.parse(bb));
   let navigate = useNavigate();
+
+
   return (
     <div className="App">
       {/** 헤더 시작 */}
@@ -70,7 +78,17 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-
+      <div>
+        {
+          watch && watch.map(
+            function (a, i) {
+              return (
+                <div ket={i}>{shoes[watch[i]].title}</div>
+              )
+            }
+          )
+        }
+      </div>
         {/* ContextAPI 용 세팅 2 프리바이더 라우터 안에다가 넣으려면 한개만 해야하는게 아니라 전체적으로 감싸줘야됨. */}
       <Context1.Provider value={ {contextTest} }>
         <Routes>
@@ -91,7 +109,6 @@ function App() {
       {
         renewal == true ?
         <Boxs>
-          {/* spread 연산자 (...문법) 중요!!! */}
           <YellowBtn bg="blue" onClick={() => { 
             data4( {shoes,setShoes} , {num,setNum} , {renewal,setRenewal} , {isLoading,setIsLoading} ) 
           }}>갱신</YellowBtn>

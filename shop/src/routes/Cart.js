@@ -25,9 +25,9 @@ function Cart() {
                 <thead>
                     <tr>
                         {/* 아마 유즈이펙트 사용해서 원래대로 되돌릴수도 있을꺼같음. */}
-                        <th onClick={()=>{disPatch(cartSort({idOn : true , nameOn : false, amountOn : false}))}}>#</th>
-                        <th onClick={()=>{disPatch(cartSort({idOn : false , nameOn : true, amountOn : false}))}}>상품명</th>
-                        <th onClick={()=>{disPatch(cartSort({idOn : false , nameOn : false, amountOn : true}))}}>수량</th>
+                        <th onClick={()=>{disPatch(cartSort({idOn : true}))}}>#</th>
+                        <th onClick={()=>{disPatch(cartSort({nameOn : true}))}}>상품명</th>
+                        <th onClick={()=>{disPatch(cartSort({amountOn : true}))}}>수량</th>
                         <th>변경하기</th>
                         <th>삭제하기</th>
                     </tr>

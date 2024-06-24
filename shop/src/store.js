@@ -1,6 +1,7 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import user from './store/userSlice.js'
 import cart from './store/cartSlice.js'
+import watch from './store/watchSlice.js'
 /**
  * -리덕스 쓰는이유 
  * -컴포넌트간 state 공유 편해짐
@@ -32,6 +33,7 @@ import cart from './store/cartSlice.js'
 export default configureStore({
   reducer: { 
     user : user.reducer,
-    cart : cart.reducer
+    cart : cart.reducer,
+    watch : watch.reducer
   }
 }) 
