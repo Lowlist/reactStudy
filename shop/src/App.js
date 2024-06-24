@@ -83,7 +83,7 @@ function App() {
           watch && watch.map(
             function (a, i) {
               return (
-                <div ket={i}>{shoes[watch[i]].title}</div>
+                <div ket={i}>{shoes[watch[i]] && shoes[watch[i]].title}</div>
               )
             }
           )
