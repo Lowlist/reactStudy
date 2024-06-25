@@ -1,4 +1,4 @@
-import { useState , useEffect, createContext } from 'react';
+import { useState , useEffect, createContext, Suspense } from 'react';
 import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 import './App.css';
 import data from './data.js';
@@ -9,7 +9,9 @@ import GoodsInfo from './routes/detail.js';
 import Event from './routes/event.js';
 import Home from './routes/home.js';
 import Cart from './routes/Cart.js';
+import axios from 'axios';
 import { Routes , Route , Link , useNavigate} from 'react-router-dom';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'  
 
 // 스타일 컴포넌트 장점
 // 1.css 안가고 여기서 만들수 있어서 편하긴 함
@@ -25,6 +27,22 @@ import { Routes , Route , Link , useNavigate} from 'react-router-dom';
 
 // 결론 = 기본 CSS 스타일 컴포넌트 둘중 아무거나 사용해도 상관 없습니다.
 // 프롭스로 전부 적용가능.
+
+/**
+ *  React Query
+ *  실시간 데이터가 중요할때 사용
+ */
+
+/**
+ *  Lazy 조금 늦게 로딩시키는 react 내장객체
+ *  const Detail = lazy( () => import('./routes/Detail.js') )
+ *  const Cart = lazy( () => import('./routes/Cart.js') )
+ *  
+ *  장점:
+ */
+
+
+
 import styled from 'styled-components';
 let YellowBtn = styled.button`
   background : ${props => props.bg};
@@ -63,7 +81,15 @@ function App() {
   let [watch,setWatch]=useState(JSON.parse(bb));
   let navigate = useNavigate();
 
-
+  // 리턴 2개 필수
+  // result.data, result.isLoading, result.error ... 유용하게 사용가능
+  // 장점  
+  let result = useQuery('names', ()=>
+    axios.get('https://codingapple1.github.io/userdata.json')
+    .then((a)=>{ return a.data })
+    // ,{ staleTime : 2000 } 시간초 지정가능
+  )
+  
   return (
     <div className="App">
       {/** 헤더 시작 */}
@@ -78,7 +104,7 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-      <div>
+      {/* <div>
         {
           watch && watch.map(
             function (a, i) {
@@ -88,22 +114,26 @@ function App() {
             }
           )
         }
-      </div>
+      </div> */}
+      {/* {result.isLoading && result.data} */}
         {/* ContextAPI 용 세팅 2 프리바이더 라우터 안에다가 넣으려면 한개만 해야하는게 아니라 전체적으로 감싸줘야됨. */}
       <Context1.Provider value={ {contextTest} }>
-        <Routes>
-          <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
-          <Route path="/detail/:id" element={ <GoodsInfo shoes={shoes}/> }></Route>
+        {/* Suspense 로딩중일때 나오게하는곳임 */}
+        <Suspense fallback={<div>로딩중임</div>}>
+          <Routes>
+            <Route path="/" element={<Home shoes={shoes} navigate={navigate}></Home>}/>
+            <Route path="/detail/:id" element={ <GoodsInfo shoes={shoes}/> }></Route>
 
-          <Route path="/cart" element={<Cart/>}></Route>
-          <Route path="*" element={<div>404임</div>}></Route>
-          
-          {/* Route nested */}
-          <Route path="/event" element={<Event/>}>
-            <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
-            <Route path='two' element={<p>생일기념 쿠폰받기</p>}></Route>
-          </Route>
-        </Routes>
+            <Route path="/cart" element={<Cart/>}></Route>
+            <Route path="*" element={<div>404임</div>}></Route>
+            
+            {/* Route nested */}
+            <Route path="/event" element={<Event/>}>
+              <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
+              <Route path='two' element={<p>생일기념 쿠폰받기</p>}></Route>
+            </Route>
+          </Routes>
+        </Suspense>
       </Context1.Provider>
 
       {
